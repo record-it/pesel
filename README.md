@@ -1,12 +1,16 @@
 #Library pesel
+
 ##Info
+
 Library pesel provides class Pesel with methods:
  * static method `of` for creating object with valid pesel,
  * instance method `getBirthDate` returning extracted birth date,
  * instance method `getGender` returning extracted gender.
  
  Method `of` takes input string with PESEL and returns `Either` object. If the string contains valid PESEL created object is on the right. In case of invalid string on the left is error as one of `PeselError` enum value. 
+ 
  ##Usage
+ 
 To create valid object containing PESEL use `of` method, which return `Either`:
  
  `Either<PeselEroor, Pesel> epesel = Pesel.of("44051401458");`

@@ -1,7 +1,7 @@
 package pl.recordit.pesel;
 
 public enum PeselError {
-    IS_NULL("Pesel can't be null!!"),
+    IS_NULL("Pesel can't be null!"),
     INVALID_LENGTH("Pesel length is invalid!"),
     NON_DIGIT_CHAR("Non digit sign in pesel!"),
     INVALID_CONTROL_DIGIT("Invalid control digit!"),
