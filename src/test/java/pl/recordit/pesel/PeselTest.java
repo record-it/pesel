@@ -7,11 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PeselTest {
 
+    @Test
     void ofForNull(){
         //GIVEN
         String peselStr = null;
         //WHEN
-        Validation<PeselError, ValidPesel> pesel = ValidPesel.of(peselStr).toValidation();
+        Validation<PeselError, Pesel> pesel = Pesel.of(peselStr).toValidation();
         //THEN
         assertTrue(pesel.isInvalid());
         assertEquals(PeselError.IS_NULL, pesel.getError());
@@ -22,7 +23,7 @@ class PeselTest {
         //GIVEN
         String peselStr = "4405140145L";
         //WHEN
-        Validation<PeselError, ValidPesel> pesel = ValidPesel.of(peselStr).toValidation();
+        Validation<PeselError, Pesel> pesel = Pesel.of(peselStr).toValidation();
         //THEN
         assertTrue(pesel.isInvalid());
         assertEquals(PeselError.NON_DIGIT_CHAR, pesel.getError());
@@ -32,7 +33,7 @@ class PeselTest {
         //GIVEN
         String peselStr = "44051401";
         //WHEN
-        Validation<PeselError, ValidPesel> pesel = ValidPesel.of(peselStr).toValidation();
+        Validation<PeselError, Pesel> pesel = Pesel.of(peselStr).toValidation();
         //THEN
         assertTrue(pesel.isInvalid());
         assertEquals(PeselError.INVALID_LENGTH, pesel.getError());
@@ -43,7 +44,7 @@ class PeselTest {
         //GIVEN
         String peselStr = "44051401459";
         //WHEN
-        Validation<PeselError, ValidPesel> pesel = ValidPesel.of(peselStr).toValidation();
+        Validation<PeselError, Pesel> pesel = Pesel.of(peselStr).toValidation();
         //THEN
         assertEquals(PeselError.INVALID_CONTROL_DIGIT,pesel.getError());
     }
@@ -53,7 +54,7 @@ class PeselTest {
         //GIVEN
         String peselStr = "44051401458";
         //WHEN
-        Validation<PeselError, ValidPesel> pesel = ValidPesel.of(peselStr).toValidation();
+        Validation<PeselError, Pesel> pesel = Pesel.of(peselStr).toValidation();
         //THEN
         assertTrue(pesel.isValid());
     }
@@ -63,7 +64,7 @@ class PeselTest {
         //GIVEN
         String peselStr = "44444444444";
         //WHEN
-        Validation<PeselError, ValidPesel> pesel = ValidPesel.of(peselStr).toValidation();
+        Validation<PeselError, Pesel> pesel = Pesel.of(peselStr).toValidation();
         //THEN
         assertTrue(pesel.isInvalid());
         assertEquals(PeselError.INVALID_BIRTH_DATE, pesel.getError());
@@ -74,12 +75,12 @@ class PeselTest {
         //GIVEN
         String peselStr = "44051401458";
         //WHEN
-        Validation<PeselError, ValidPesel> pesel = ValidPesel.of(peselStr).toValidation();
+        Validation<PeselError, Pesel> pesel = Pesel.of(peselStr).toValidation();
         //THEN
         assertNotNull(pesel.get());
         assertTrue(pesel.isValid());
         assertFalse(pesel.isEmpty());
-        assertEquals(peselStr, pesel.get().getPesel());
+        assertEquals(peselStr, pesel.get().getPesel().get());
     }
 
     @Test
@@ -87,9 +88,9 @@ class PeselTest {
         //GIVEN
         String peselStr = "44051401458";
         //WHEN
-        Validation<PeselError, ValidPesel> pesel = ValidPesel.of(peselStr).toValidation();
+        Validation<PeselError, Pesel> pesel = Pesel.of(peselStr).toValidation();
         //THEN
-        String result = pesel.map(ValidPesel::getBirthDate)
+        String result = pesel.map(Pesel::getBirthDate)
                 .fold(PeselError::getErrorMessage, date -> date.get().toString());
         assertEquals("1944-05-14", result);
     }

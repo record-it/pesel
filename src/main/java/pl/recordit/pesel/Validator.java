@@ -1,8 +1,7 @@
 package pl.recordit.pesel;
 
 import io.vavr.control.Either;
-
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -19,14 +18,14 @@ class Validator<T, E> {
         }
     }
 
-    private List<Phase<T, E>> predicates = new ArrayList<>();
+    private List<Phase<T, E>> predicates = new LinkedList<>();
 
     public static <T, E> Validator<T, E> builder(){
         return new Validator<>();
     }
 
-    public Validator<T, E> condition(Predicate<T> predicate, E failureObject){
-        predicates.add(new Phase<>(predicate, failureObject));
+    public Validator<T, E> condition(Predicate<T> predicate, E error){
+        predicates.add(new Phase<>(predicate, error));
         return this;
     }
 

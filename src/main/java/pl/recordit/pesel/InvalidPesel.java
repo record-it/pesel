@@ -1,21 +1,20 @@
 package pl.recordit.pesel;
 
-import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Validation;
 
 import java.time.LocalDate;
 
-final public class InvalidPesel<E> implements Pesel{
-    private final E error;
+final public class InvalidPesel implements Pesel{
+    private final PeselError error;
     private final String pesel;
 
-    public static Pesel of(String pesel){
-        Validation<PeselError, Pesel> opesel = ValidPesel.of(pesel).toValidation();
-        return opesel.isValid() ? opesel.get() : new InvalidPesel<>(pesel, opesel.getError());
+    protected static Pesel ofString(String pesel){
+        Validation<PeselError, Pesel> opesel = ValidPesel.ofString(pesel).toValidation();
+        return opesel.isValid() ? opesel.get() : new InvalidPesel(pesel, opesel.getError());
     }
 
-    private InvalidPesel(String peselStr, E error) {
+    private InvalidPesel(String peselStr, PeselError error) {
         this.pesel = peselStr;
         this.error = error;
     }
@@ -26,12 +25,24 @@ final public class InvalidPesel<E> implements Pesel{
     }
 
     @Override
-    public ValidPesel.Gender getGender() {
-        return ValidPesel.Gender.UNKNOWN;
+    public Gender getGender() {
+        return Gender.UNKNOWN;
     }
 
     @Override
-    public String getPesel() {
-        return pesel + error;
+    public Option<String> getPesel() {
+        return Option.some(pesel);
+    }
+
+    public PeselError getError() {
+        return error;
+    }
+
+    @Override
+    public String toString() {
+        return "InvalidPesel{" +
+                "error=" + error +
+                ", pesel='" + pesel + '\'' +
+                '}';
     }
 }

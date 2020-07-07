@@ -6,7 +6,6 @@ import io.vavr.control.Option;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Function;
@@ -29,8 +28,8 @@ final public class ValidPesel implements Pesel{
     }
 
     @Override
-    public String getPesel() {
-        return pesel;
+    public Option<String> getPesel() {
+        return Option.some(pesel);
     }
 
     @Override
@@ -41,7 +40,7 @@ final public class ValidPesel implements Pesel{
         return extractBirthDate(pesel);
     }
 
-    public static Either<PeselError, Pesel> of(String pesel) {
+    protected static Either<PeselError, Pesel> ofString(String pesel) {
         final Validator<String, PeselError> validator = Validator.builder();
         return validator
                 .condition(Objects::nonNull,
