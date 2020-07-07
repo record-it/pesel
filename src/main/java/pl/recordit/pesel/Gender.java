@@ -11,7 +11,7 @@ public enum Gender {
         this.codes = codes;
     }
 
-    private static Gender of(final char code) {
+    protected static Gender of(final char code) {
         return Arrays.stream(Gender.values())
                 .filter(g -> g.codes.contains(String.valueOf(code)))
                 .findAny()
