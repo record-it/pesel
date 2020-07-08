@@ -24,7 +24,7 @@ public class Demo {
         );
         pesels.toStream()
                 .flatMap(Pesel::toInvalidPesel)
-                .forEach(p -> System.out.println(p.getPesel().getOrElse("") + " " + p.getError().getErrorMessage()));
+                .forEach(p -> System.out.println(p.getPesel().getOrElse("") + " " + p.getError()));
 
         Pesel pesel = Pesel.ofNoError("44051401457");
         if (pesel.isInvalid()){
