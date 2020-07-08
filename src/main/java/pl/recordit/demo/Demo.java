@@ -2,13 +2,7 @@ package pl.recordit.demo;
 
 import io.vavr.collection.List;
 import io.vavr.control.Option;
-import pl.recordit.pesel.InvalidPesel;
 import pl.recordit.pesel.Pesel;
-import pl.recordit.pesel.ValidPesel;
-
-import javax.validation.Valid;
-import java.util.Optional;
-
 
 public class Demo {
     public static void main(String[] args) {
