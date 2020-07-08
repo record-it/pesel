@@ -44,9 +44,9 @@ final public class ValidPesel implements Pesel{
                         PeselError.INVALID_LENGTH)
                 .condition(str -> str.chars().allMatch(Character::isDigit),
                         PeselError.NON_DIGIT_CHAR)
-                .condition(str -> ValidPesel.controlDigit(str) % 10 == Integer.parseInt(str.substring(10)),
+                .condition(str -> controlDigit(str) % 10 == Integer.parseInt(str.substring(10)),
                         PeselError.INVALID_CONTROL_DIGIT)
-                .condition(str -> ValidPesel.extractBirthDate(str).isDefined(),
+                .condition(str -> extractBirthDate(str).isDefined(),
                         PeselError.INVALID_BIRTH_DATE)
                 .validate(pesel, () -> new ValidPesel(pesel));
     }
@@ -99,7 +99,7 @@ final public class ValidPesel implements Pesel{
         if (this == o) return true;
         if (!(o instanceof ValidPesel)) return false;
         ValidPesel pesel1 = (ValidPesel) o;
-        return getPesel().equals(pesel1.getPesel());
+        return getPesel().equals(pesel1.pesel);
     }
 
     @Override
