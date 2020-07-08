@@ -2,14 +2,16 @@
 
 ### version 0.9.1
 
-## Info
+## Depencies
+* VAVR
+## Description
 
 Library pesel provides interface `Pesel` with static methods:
  * static method `of` for creating valid object pesel or error,
  * static method `ofNoError` returning valid object of `ValidPesel` class or special instance INVALID in case of non valid string,
- * static method `both` returning object of one from two class implementing interface `Pesel` - `ValidPesel` or `InvalidPesel` with error.
+ * static method `both` returning object one of two class implementing interface `Pesel` - `ValidPesel` or `InvalidPesel` with error.
  
- Method `of` takes input string with PESEL and returns `Either` object. If the string contains valid PESEL created object is on the right. In case of invalid string, on the left is error as one of `PeselError` enum value.
+ Method `of` takes input string with PESEL and returns `Either` object. If the string contains valid PESEL, the created object is on the right. In case of invalid string, on the left is error as one of `PeselError` enum value.
  
  Instance methods of Pesel:
  * `getBirthDate` returns Option with LocalDate,
@@ -33,7 +35,7 @@ String result = Pesel.of("44444444444")
          System.out.println(result);
 ```   
          
-If you don't like **Vavr** use `ofNoError` method, which returns a special instace INVALID  for non valid PESEL:
+If you don't like **Vavr** use `ofNoError` method, which returns a special INVALID instace for all non valid PESEL's:
 ```java
 Pesel pesel = Pesel.ofNoError("44051401457");
         if (pesel.isInvalid()){
@@ -57,3 +59,6 @@ pesel = Pesel.ofBoth("44051401458");
 ```
 
 Choose wisely and have fun.
+
+## License
+[MIT License](https://choosealicense.com/licenses/mit/)
