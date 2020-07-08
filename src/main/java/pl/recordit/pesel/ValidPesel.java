@@ -27,9 +27,6 @@ final public class ValidPesel implements Pesel{
 
     @Override
     public Option<String> getPesel() {
-        if (this == INVALID){
-            return Option.none();
-        }
         return Option.of(pesel);
     }
 
@@ -92,9 +89,6 @@ final public class ValidPesel implements Pesel{
 
     @Override
     public String toString() {
-        if (this == InvalidPesel.INVALID){
-            return "Pesel is invalid!";
-        }
         return "Pesel{" +
                 "pesel='" + pesel + '\'' +
                 '}';

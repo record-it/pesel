@@ -7,7 +7,7 @@
     <artifactId>pesel</artifactId>
     <version>0.9.1</version>
     <name>pesel</name>
-    <description>Java library for PESEL</description>
+    <description>Java library for dealing with PESEL</description>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>

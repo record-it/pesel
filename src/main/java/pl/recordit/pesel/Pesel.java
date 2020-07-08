@@ -6,8 +6,8 @@ import io.vavr.control.Option;
 import java.time.LocalDate;
 
 public interface Pesel {
-
     Pesel INVALID = InvalidPesel.REF_TO_INVALID;
+    Dupa d = new Dupa();
 
     Option<LocalDate> getBirthDate();
 

@@ -15,10 +15,10 @@ Library pesel provides interface `Pesel` with static methods:
  
  Instance methods of Pesel:
  * `getBirthDate` returns Option with LocalDate,
- * `getPesel` returns Optiona with Pesel as string,
- * `getGender` returns one of constant from Gender enum.
+ * `getPesel` returns Option with Pesel as string,
+ * `getGender` returns one of constants from Gender enum.
  
- Class `InvalidPesel`  contains additional method `getError` returning PeselError
+ Class `InvalidPesel`  contains additional method `getError` returning PeselError.
  
  ## Usage
 If you familiar with **Vavr** library use method `of` to create valid object containing PESEL, which return `Either`:
@@ -26,7 +26,7 @@ If you familiar with **Vavr** library use method `of` to create valid object con
 Either<PeselEroor, Pesel> epesel = Pesel.of("44051401458");
 ```
  
- Process using `Either` or get object of class `ValidPesel` if is present on right side:
+Process using `Either` or get object of class `ValidPesel` if is present on right side:
  
 ```java
 String result = Pesel.of("44444444444")
@@ -35,7 +35,7 @@ String result = Pesel.of("44444444444")
          System.out.println(result);
 ```   
          
-If you don't like **Vavr** use `ofNoError` method, which returns a special INVALID instace for all non valid PESEL's:
+If you don't like **Vavr** use `ofNoError` method, which returns a special INVALID instance for all non valid PESEL's:
 ```java
 Pesel pesel = Pesel.ofNoError("44051401457");
         if (pesel.isInvalid()){
@@ -45,7 +45,7 @@ Pesel pesel = Pesel.ofNoError("44051401457");
             System.out.println("gender " + pesel.getGender());
         }
 ```
-Use `ofBoth` method if you want to get proper object (class `ValidPesel`) or inproper object (class `InvalidPesel`). An `InvalidPesel` object has additional method returning error message.
+Use `ofBoth` method if you want to get the proper object (class `ValidPesel`), or the improper object (class `InvalidPesel`). An `InvalidPesel` object has additional method returning error message.
 ```java
 pesel = Pesel.ofBoth("44051401458");
         if (pesel.isInvalid()){
@@ -61,4 +61,4 @@ pesel = Pesel.ofBoth("44051401458");
 Choose wisely and have fun.
 
 ## License
-[MIT License](https://choosealicense.com/licenses/mit/)
+[Apache License](http://www.apache.org/licenses/LICENSE-2.0.txt)
