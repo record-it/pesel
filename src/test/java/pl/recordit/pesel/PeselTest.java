@@ -15,7 +15,7 @@ class PeselTest {
         Validation<PeselError, Pesel> pesel = Pesel.of(peselStr).toValidation();
         //THEN
         assertTrue(pesel.isInvalid());
-        assertEquals(PeselError.IS_NULL, pesel.getError());
+        assertEquals(PeselError.NULL, pesel.getError());
     }
 
     @Test
@@ -93,5 +93,57 @@ class PeselTest {
         String result = pesel.map(Pesel::getBirthDate)
                 .fold(PeselError::getErrorMessage, date -> date.get().toString());
         assertEquals("1944-05-14", result);
+    }
+
+    @Test
+    void ofNoError(){
+        //GIVEN
+        String peselStr = "44051401458";
+        //WHEN
+        Pesel pesel = Pesel.ofNoError(peselStr);
+        //THEN
+        assertTrue(pesel.isValid());
+        assertFalse(pesel.isInvalid());
+        assertTrue(pesel.getBirthDate().isDefined());
+        assertEquals(Gender.MALE,pesel.getGender());
+        assertEquals(peselStr,pesel.getPesel().get());
+
+        //GIVEN
+        peselStr = "44051401457";
+        //WHEN
+        pesel = Pesel.ofNoError(peselStr);
+        //THEN
+        assertTrue(pesel.isInvalid());
+        assertFalse(pesel.isValid());
+        assertTrue(pesel.getBirthDate().isEmpty());
+        assertEquals(Gender.UNKNOWN,pesel.getGender());
+        assertTrue(pesel.getPesel().isEmpty());
+    }
+
+    @Test
+    void ofBoth(){
+        //GIVEN
+        String peselStr = "44051401458";
+        //WHEN
+        Pesel pesel = Pesel.ofBoth(peselStr);
+        //THEN
+        assertTrue(pesel instanceof ValidPesel);
+        assertTrue(pesel.isValid());
+        assertTrue(pesel.getBirthDate().isDefined());
+        assertEquals(Gender.MALE,pesel.getGender());
+        assertEquals(peselStr,pesel.getPesel().get());
+
+        //GIVEN
+        peselStr = "44051401457";
+        //WHEN
+        pesel = Pesel.ofBoth(peselStr);
+        //THEN
+        assertTrue(pesel instanceof InvalidPesel);
+        assertTrue(pesel.isInvalid());
+        assertFalse(pesel.isValid());
+        assertTrue(pesel.getBirthDate().isEmpty());
+        assertEquals(Gender.UNKNOWN,pesel.getGender());
+        assertEquals("44051401457",pesel.getPesel().get());
+        assertEquals(PeselError.INVALID_CONTROL_DIGIT, Pesel.toInvalidPesel(pesel).map(InvalidPesel::getError).get());
     }
 }

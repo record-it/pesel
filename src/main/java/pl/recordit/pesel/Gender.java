@@ -7,6 +7,7 @@ public enum Gender {
     FEMALE("02468"),
     UNKNOWN("");
     private final String codes;
+
     Gender(String codes) {
         this.codes = codes;
     }

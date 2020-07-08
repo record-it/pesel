@@ -16,8 +16,6 @@ final public class ValidPesel implements Pesel{
     private static final int[][] MONTH_CODES = {{1800, 80}, {1900, 0}, {2000, 20}, {2100, 40}, {2200, 60}};
     private static final int LENGTH = 11;
 
-    public static final ValidPesel INVALID = new ValidPesel("");
-
     private String pesel;
 
     private ValidPesel() {
@@ -29,14 +27,14 @@ final public class ValidPesel implements Pesel{
 
     @Override
     public Option<String> getPesel() {
-        return Option.some(pesel);
+        if (this == INVALID){
+            return Option.none();
+        }
+        return Option.of(pesel);
     }
 
     @Override
     public Option<LocalDate> getBirthDate() {
-        if (this == INVALID){
-            return Option.none();
-        }
         return extractBirthDate(pesel);
     }
 
@@ -44,7 +42,7 @@ final public class ValidPesel implements Pesel{
         final Validator<String, PeselError> validator = Validator.builder();
         return validator
                 .condition(Objects::nonNull,
-                        PeselError.IS_NULL)
+                        PeselError.NULL)
                 .condition(str -> str.length() == LENGTH,
                         PeselError.INVALID_LENGTH)
                 .condition(str -> str.chars().allMatch(Character::isDigit),
@@ -58,9 +56,6 @@ final public class ValidPesel implements Pesel{
 
     @Override
     public Gender getGender() {
-        if (this == INVALID){
-            return Gender.UNKNOWN;
-        }
         return Gender.of(pesel.charAt(9));
     }
 
@@ -97,7 +92,7 @@ final public class ValidPesel implements Pesel{
 
     @Override
     public String toString() {
-        if (this == INVALID){
+        if (this == InvalidPesel.INVALID){
             return "Pesel is invalid!";
         }
         return "Pesel{" +
