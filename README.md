@@ -1,4 +1,5 @@
 # Library pesel
+
 ### version 0.9.1
 
 ## Info
@@ -18,24 +19,21 @@ Library pesel provides interface `Pesel` with static methods:
  Class `InvalidPesel`  contains additional method `getError` returning PeselError
  
  ## Usage
-If you familiar with **Vavr** library use method `of`: 
-To create valid object containing PESEL use `of` method, which return `Either`:
+If you familiar with **Vavr** library use method `of` to create valid object containing PESEL, which return `Either`:
  ```java
 Either<PeselEroor, Pesel> epesel = Pesel.of("44051401458");
 ```
  
- Process using `Either` or get object of class `Pesel` if is present on right side:
+ Process using `Either` or get object of class `ValidPesel` if is present on right side:
  
 ```java
 String result = Pesel.of("44444444444")
                  .map(Pesel::getBirthDate)
                  .fold(error -> "Can't extract birth date, pesel is invalid due the error: " + error.getErrorMessage(), date -> date.get().toString());
          System.out.println(result);
-```
-All object with in     
-       
+```   
          
-If you don't like **Vavr** use `ofNoError` method:
+If you don't like **Vavr** use `ofNoError` method, which returns a special instace INVALID  for non valid PESEL:
 ```java
 Pesel pesel = Pesel.ofNoError("44051401457");
         if (pesel.isInvalid()){
@@ -45,8 +43,7 @@ Pesel pesel = Pesel.ofNoError("44051401457");
             System.out.println("gender " + pesel.getGender());
         }
 ```
-
-Use `ofBoth` method if you want to get proper object (class `ValidPasel`) or inproper `Pesel` object (class `InvalidPesel`) with string and error message.
+Use `ofBoth` method if you want to get proper object (class `ValidPesel`) or inproper object (class `InvalidPesel`). An `InvalidPesel` object has additional method returning error message.
 ```java
 pesel = Pesel.ofBoth("44051401458");
         if (pesel.isInvalid()){
@@ -59,5 +56,4 @@ pesel = Pesel.ofBoth("44051401458");
         }
 ```
 
-   
- 
+Choose wisely and have fun.
