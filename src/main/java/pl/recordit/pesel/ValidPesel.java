@@ -116,13 +116,13 @@ final public class ValidPesel implements Pesel{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ValidPesel)) return false;
-        ValidPesel pesel1 = (ValidPesel) o;
-        return getPesel().equals(pesel1.pesel);
+        ValidPesel that = (ValidPesel) o;
+        return Objects.equals(pesel, that.pesel);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPesel());
+        return Objects.hash(pesel);
     }
 }
 
