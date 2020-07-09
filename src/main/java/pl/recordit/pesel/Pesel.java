@@ -44,7 +44,7 @@ public interface Pesel {
     }
 
     static Option<InvalidPesel> toInvalidPesel(Pesel pesel){
-        return Option.some(pesel)
+        return Option.of(pesel)
                 .filter(p -> p instanceof InvalidPesel)
                 .map(p -> (InvalidPesel) p);
     }
@@ -63,7 +63,7 @@ public interface Pesel {
     }
 
     default boolean isValid(){
-        if(this instanceof ValidPesel){
+        if (this instanceof ValidPesel){
             return this != INVALID;
         }
         return false;
