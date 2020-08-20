@@ -35,7 +35,7 @@ String result = Pesel.of("44444444444")
          System.out.println(result);
 ```   
          
-If you don't like **Vavr** use `ofNoError` method, which returns a special INVALID instance for all non valid PESEL's. In case of INVALID instance you can safely call all interface methods, which returns empty Option and UNKNOW gender:
+If you don't like **Vavr** use `ofNoError` method, which returns a special `INVALID` instance for all non valid PESEL's. In case of `INVALID` instance you can safely call all interface methods, which returns empty `Option` and `UNKNOW` constant for gender:
 ```java
 Pesel pesel = Pesel.ofNoError("44051401457");
         if (pesel.isInvalid()){
@@ -57,7 +57,6 @@ Pesel pesel = Pesel.ofBoth("44051401458");
             System.out.println(pesel.getBirthDate().get());
         }
 ```
-
 Choose wisely and have fun.
 
 ## License
