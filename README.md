@@ -35,7 +35,7 @@ String result = Pesel.of("44444444444")
          System.out.println(result);
 ```   
          
-If you don't like **Vavr** use `ofNoError` method, which returns a special INVALID instance for all non valid PESEL's:
+If you don't like **Vavr** use `ofNoError` method, which returns a special INVALID instance for all non valid PESEL's. In case of INVALID instance you can safely call all interface methods, which returns empty Option and UNKNOW gender:
 ```java
 Pesel pesel = Pesel.ofNoError("44051401457");
         if (pesel.isInvalid()){
@@ -47,9 +47,9 @@ Pesel pesel = Pesel.ofNoError("44051401457");
 ```
 Use `ofBoth` method if you want to get the proper object (class `ValidPesel`), or the improper object (class `InvalidPesel`). An `InvalidPesel` object has additional method returning error message.
 ```java
-pesel = Pesel.ofBoth("44051401458");
+Pesel pesel = Pesel.ofBoth("44051401458");
         if (pesel.isInvalid()){
-            Pesel.toInvalidPesel(pesel).flatMap(p -> Option.of(p.getError().getErrorMessage())).toJavaOptional().ifPresent(error -> System.out.println(error));
+            pesel.toInvalidPesel().flatMap(p -> Option.of(p.getError().getErrorMessage())).toJavaOptional().ifPresent(System.out::println);
         }
         if (pesel.isValid()){
             System.out.println(pesel.getGender());
