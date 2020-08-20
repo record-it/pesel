@@ -40,32 +40,26 @@ public interface Pesel {
     }
 
     static Pesel ofNoError(String pesel){
-        return ValidPesel.ofString(pesel).toValidation().getOrElse(ValidPesel.INVALID);
+        return ValidPesel.ofString(pesel).toValidation().getOrElse(INVALID);
     }
 
-    static Option<InvalidPesel> toInvalidPesel(Pesel pesel){
-        return Option.of(pesel)
+    default Option<InvalidPesel> toInvalidPesel(){
+        return Option.of(this)
                 .filter(p -> p instanceof InvalidPesel)
                 .map(p -> (InvalidPesel) p);
     }
 
-    static Option<ValidPesel> toValidPesel(Pesel pesel){
-        return Option.some(pesel)
+    default Option<ValidPesel> toValidPesel(){
+        return Option.some(this)
                 .filter(p -> p instanceof ValidPesel)
                 .map(p -> (ValidPesel) p);
     }
 
     default boolean isInvalid(){
-        if (this instanceof ValidPesel) {
-            return this == INVALID;
-        }
-        return true;
+        return this instanceof InvalidPesel;
     }
 
     default boolean isValid(){
-        if (this instanceof ValidPesel){
-            return this != INVALID;
-        }
-        return false;
+        return this instanceof ValidPesel;
     }
 }

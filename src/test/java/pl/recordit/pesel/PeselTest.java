@@ -144,6 +144,6 @@ class PeselTest {
         assertTrue(pesel.getBirthDate().isEmpty());
         assertEquals(Gender.UNKNOWN,pesel.getGender());
         assertEquals("44051401457",pesel.getPesel().get());
-        assertEquals(PeselError.INVALID_CONTROL_DIGIT, Pesel.toInvalidPesel(pesel).map(InvalidPesel::getError).get());
+        assertEquals(PeselError.INVALID_CONTROL_DIGIT, pesel.toInvalidPesel().map(InvalidPesel::getError).get());
     }
 }
