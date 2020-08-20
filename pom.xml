@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.record-it</groupId>
     <artifactId>pesel</artifactId>
-    <version>0.9.1</version>
+    <version>0.9.2</version>
     <name>pesel</name>
     <description>Java library for dealing with PESEL</description>
     <licenses>
